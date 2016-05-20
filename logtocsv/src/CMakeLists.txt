@@ -1,0 +1,5 @@
+set(SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/stuffer.cpp
+    PARENT_SCOPE
+)

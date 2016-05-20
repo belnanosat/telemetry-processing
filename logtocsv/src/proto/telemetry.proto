@@ -1,0 +1,36 @@
+syntax = "proto2";
+message TelemetryPacket {
+	required int32 packet_id = 1;
+	required fixed32 status = 2;
+	required fixed32 timestamp = 3;
+	optional float altitude = 4;
+	optional float latitude = 5;
+	optional float longitude = 6;
+	optional int32 pressure = 7;
+	optional int32 bmp180_temperature = 8;
+	optional float voltage = 9;
+	optional float radiation = 10;
+	optional uint32 ds18b20_temperature1 = 11;
+	optional uint32 ds18b20_temperature2 = 12;
+	optional uint32 ds18b20_temperature3 = 13;
+	optional uint32 ds18b20_temperature4 = 14;
+	optional int32 acceleration_x = 15;
+	optional int32 acceleration_y = 16;
+	optional int32 acceleration_z = 17;
+	optional int32 gyroscope_x = 18;
+	optional int32 gyroscope_y = 19;
+	optional int32 gyroscope_z = 20;
+	optional uint32 sun_sensor1 = 21;
+	optional uint32 sun_sensor2 = 22;
+	optional uint32 sun_sensor3 = 23;
+	optional uint32 sun_sensor4 = 24;
+	optional int32 magnetometer_x = 25;
+	optional int32 magnetometer_y = 26;
+	optional int32 magnetometer_z = 27;
+	optional float quaternion0 = 28;
+	optional float quaternion1 = 29;
+	optional float quaternion2 = 30;
+	optional float quaternion3 = 31;
+	optional int32 ozone = 32;
+	optional int32 uv_light = 33;
+}

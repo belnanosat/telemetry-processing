@@ -1,0 +1,3 @@
+[submodule "logtocsv/nanopb"]
+	path = logtocsv/nanopb
+	url = https://github.com/nanopb/nanopb

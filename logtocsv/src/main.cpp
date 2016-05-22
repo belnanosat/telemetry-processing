@@ -112,6 +112,9 @@ string packetToCSVRecord(const TelemetryPacket &packet) {
 	ss << packet.status << ",";
 	ss << packet.timestamp << ",";
 
+	if (packet.has_cpu_temperature) ss << packet.cpu_temperature;
+	ss << ",";
+
 	if (packet.has_altitude) ss << packet.altitude;
 	ss << ",";
 
@@ -133,16 +136,16 @@ string packetToCSVRecord(const TelemetryPacket &packet) {
 	if (packet.has_radiation) ss << packet.radiation;
 	ss << ",";
 
-	if (packet.has_ds18b20_temperature1) ss << packet.ds18b20_temperature1;
+	if (packet.has_ds18b20_temperature1) ss << static_cast<int16_t>(packet.ds18b20_temperature1) / 16.0;
 	ss << ",";
 
-	if (packet.has_ds18b20_temperature2) ss << packet.ds18b20_temperature2;
+	if (packet.has_ds18b20_temperature2) ss << static_cast<int16_t>(packet.ds18b20_temperature2) / 16.0;
 	ss << ",";
 
-	if (packet.has_ds18b20_temperature3) ss << packet.ds18b20_temperature3;
+	if (packet.has_ds18b20_temperature3) ss << static_cast<int16_t>(packet.ds18b20_temperature3) / 16.0;
 	ss << ",";
 
-	if (packet.has_ds18b20_temperature4) ss << packet.ds18b20_temperature4;
+	if (packet.has_ds18b20_temperature4) ss << static_cast<int16_t>(packet.ds18b20_temperature4) / 16.0;
 	ss << ",";
 
 	if (packet.has_acceleration_x) ss << packet.acceleration_x;
@@ -210,6 +213,7 @@ string getCSVHead() {
 	res += "packet_id,";
 	res += "status,";
 	res += "timestamp,";
+	res += "cpu_temperature,";
 	res += "altitude,";
 	res += "latitude,";
 	res += "longitude,";

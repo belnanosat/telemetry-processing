@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <vector>
+#include <iomanip>
 
 #include <pb.h>
 #include <pb_decode.h>
@@ -13,6 +14,7 @@
 #define N 100000
 #define BLOCK_SIZE 512
 #define MAX_PACKET_SIZE 1024
+#define GPS_MULTIPLIER 0.0000001
 
 using namespace std;
 
@@ -115,13 +117,21 @@ string packetToCSVRecord(const TelemetryPacket &packet) {
 	if (packet.has_cpu_temperature) ss << packet.cpu_temperature;
 	ss << ",";
 
-	if (packet.has_altitude) ss << packet.altitude;
+	if (packet.has_bmp180_altitude) ss << packet.bmp180_altitude;
 	ss << ",";
 
-	if (packet.has_latitude) ss << packet.latitude;
+	if (packet.has_gps_altitude) ss << packet.gps_altitude;
 	ss << ",";
 
-	if (packet.has_longitude) ss << packet.longitude;
+	if (packet.has_gps_sats_num) ss << packet.gps_sats_num;
+	ss << ",";
+
+	if (packet.has_latitude) ss << fixed << setprecision(8)
+	                            << packet.latitude * GPS_MULTIPLIER;
+	ss << ",";
+
+	if (packet.has_longitude) ss << fixed << setprecision(8)
+	                             << packet.longitude * GPS_MULTIPLIER;
 	ss << ",";
 
 	if (packet.has_pressure) ss << packet.pressure;
@@ -214,7 +224,9 @@ string getCSVHead() {
 	res += "status,";
 	res += "timestamp,";
 	res += "cpu_temperature,";
-	res += "altitude,";
+	res += "bmp180_altitude,";
+	res += "gps_altitude,";
+	res += "gps_sats_num,";
 	res += "latitude,";
 	res += "longitude,";
 	res += "pressure,";

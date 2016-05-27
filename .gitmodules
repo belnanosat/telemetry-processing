@@ -1,3 +1,6 @@
 [submodule "logtocsv/nanopb"]
 	path = logtocsv/nanopb
 	url = https://github.com/nanopb/nanopb
+[submodule "console-receiver/nanopb"]
+	path = console-receiver/nanopb
+	url = https://github.com/nanopb/nanopb

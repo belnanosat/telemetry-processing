@@ -15,6 +15,8 @@
 #define BLOCK_SIZE 512
 #define MAX_PACKET_SIZE 1024
 #define GPS_MULTIPLIER 0.0000001
+#define MLX90614_CONVERSION_COEF 0.02
+#define KELVIN_TO_CELCIUS_SHIFT -273.15
 
 using namespace std;
 
@@ -143,7 +145,7 @@ string packetToCSVRecord(const TelemetryPacket &packet) {
 	if (packet.has_voltage) ss << packet.voltage;
 	ss << ",";
 
-	if (packet.has_radiation) ss << packet.radiation;
+	if (packet.has_radiation_pulses_count) ss << packet.radiation_pulses_count;
 	ss << ",";
 
 	if (packet.has_ds18b20_temperature1) ss << static_cast<int16_t>(packet.ds18b20_temperature1) / 16.0;
@@ -213,6 +215,18 @@ string packetToCSVRecord(const TelemetryPacket &packet) {
 	ss << ",";
 
 	if (packet.has_uv_light) ss << packet.uv_light;
+	ss << ",";
+
+	if (packet.has_mlx90614_ambient_temperature) {
+		ss << packet.mlx90614_ambient_temperature * MLX90614_CONVERSION_COEF
+			+ KELVIN_TO_CELCIUS_SHIFT;
+	}
+	ss << ",";
+
+	if (packet.has_mlx90614_object_temperature) {
+		ss << packet.mlx90614_object_temperature * MLX90614_CONVERSION_COEF
+			+ KELVIN_TO_CELCIUS_SHIFT;
+	}
 
 	return ss.str();
 }
@@ -232,7 +246,7 @@ string getCSVHead() {
 	res += "pressure,";
 	res += "bmp180_temperature,";
 	res += "voltage,";
-	res += "radiation,";
+	res += "radiation_pulses_count,";
 	res += "ds18b20_temperature1,";
 	res += "ds18b20_temperature2,";
 	res += "ds18b20_temperature3,";
@@ -255,7 +269,9 @@ string getCSVHead() {
 	res += "quaternion2,";
 	res += "quaternion3,";
 	res += "ozone,";
-	res += "uv_light";
+	res += "uv_light,";
+	res += "mlx90614_ambient_temperature,";
+	res += "mlx90614_object_temperature";
 
 	return res;
 }
